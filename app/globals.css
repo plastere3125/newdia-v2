@@ -155,6 +155,37 @@ ul { list-style: none; padding: 0; margin: 0; }
   .nd-hero-container { padding-right: 20px !important; }
 }
 
+/* ─── MONSTER hover distortion ─── */
+@keyframes nd-monster-drift {
+  0%   { transform: skewX(0deg) translateX(0); }
+  18%  { transform: skewX(-5deg) translateX(2px); }
+  36%  { transform: skewX(3.5deg) translateX(-1.5px); }
+  55%  { transform: skewX(-2deg) translateX(1px); }
+  75%  { transform: skewX(1.5deg) translateX(-0.5px); }
+  100% { transform: skewX(0deg) translateX(0); }
+}
+
+.nd-monster-btn {
+  position: relative;
+}
+.nd-monster-btn::after {
+  content: '';
+  position: absolute;
+  inset: -1px;
+  border: 1px solid var(--lime);
+  opacity: 0;
+  transform: translate(5px, -3px);
+  pointer-events: none;
+  transition: opacity 0.12s ease, transform 0.12s ease;
+}
+.nd-monster-btn:hover::after {
+  opacity: 0.55;
+  transform: translate(3px, -2px);
+}
+.nd-monster-btn:hover {
+  animation: nd-monster-drift 0.45s ease forwards;
+}
+
 /* ─── Divider ─── */
 .nd-rule {
   border: none;

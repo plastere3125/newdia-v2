@@ -7,25 +7,25 @@ const services = [
     num: '01',
     title: 'Brand Identity',
     sub: 'CI · BI · 로고 · 가이드라인',
-    description: '기업과 브랜드의 첫 인상을 설계합니다. 아이덴티티 시스템을 구축하고 모든 접점에 일관되게 적용합니다.',
+    description: '보이는 것을 만드는 것이 아니라, 기억되는 구조를 만듭니다.',
   },
   {
     num: '02',
     title: 'Web Design',
     sub: 'UX/UI · 반응형 · 개발',
-    description: '브랜드 경험을 디지털로 확장합니다. 사용자 중심 설계와 개발을 함께 진행합니다.',
+    description: '웹사이트가 아니라 브랜드 경험을 구축합니다.',
   },
   {
     num: '03',
     title: 'Photography',
     sub: '제품 · 인물 · 공간',
-    description: '브랜드의 이야기를 이미지로 완성합니다. 제품, 인물, 공간 전반에 걸친 촬영을 진행합니다.',
+    description: '제품이 아니라 맥락을 촬영합니다.',
   },
   {
     num: '04',
     title: 'Marketing',
     sub: 'SNS · 콘텐츠 · 캠페인',
-    description: 'SNS 관리부터 바이럴 캠페인까지. 브랜드 일관성을 유지하며 실행합니다.',
+    description: '노출이 아니라 관계를 설계합니다.',
   },
 ]
 
@@ -81,7 +81,7 @@ export default function Services() {
                       {svc.sub}
                     </span>
                   </div>
-                  <p style={{ fontSize: 14, lineHeight: 1.75, color: 'rgba(255,255,255,0.42)' }}>
+                  <p style={{ fontSize: 18, fontWeight: 500, lineHeight: 1.6, color: 'rgba(255,255,255,0.75)', letterSpacing: '-0.01em' }}>
                     {svc.description}
                   </p>
                 </div>

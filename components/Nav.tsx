@@ -74,6 +74,7 @@ export default function Nav() {
             href="https://beos-studio-monster.vercel.app"
             target="_blank"
             rel="noopener noreferrer"
+            className="nd-monster-btn"
             style={{
               padding: '7px 16px',
               border: '1px solid var(--lime)',

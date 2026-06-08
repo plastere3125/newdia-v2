@@ -138,11 +138,13 @@ function WorkCard({
   cat,
   onClick,
   large = false,
+  meta,
 }: {
   item: PortfolioItem
   cat: PortfolioCategory
   onClick: () => void
   large?: boolean
+  meta?: { services: string; quote: string }
 }) {
   const [hovered, setHovered] = useState(false)
 
@@ -167,32 +169,60 @@ function WorkCard({
         loading="eager"
         style={{
           width: '100%', height: '100%', objectFit: 'cover',
-          transition: 'transform 0.6s cubic-bezier(0.22,1,0.36,1)',
-          transform: hovered ? 'scale(1.04)' : 'scale(1)',
+          transition: 'transform 0.7s cubic-bezier(0.22,1,0.36,1)',
+          transform: hovered ? 'scale(1.05)' : 'scale(1)',
         }}
       />
-      {/* 항상 표시되는 하단 정보 바 */}
       <div style={{
         position: 'absolute', inset: 0,
-        background: hovered
-          ? 'linear-gradient(to top, rgba(0,0,0,0.75) 0%, rgba(0,0,0,0.2) 50%, transparent 100%)'
-          : 'linear-gradient(to top, rgba(0,0,0,0.55) 0%, transparent 50%)',
+        background: hovered && meta
+          ? 'linear-gradient(to top, rgba(0,0,0,0.92) 0%, rgba(0,0,0,0.5) 55%, rgba(0,0,0,0.08) 100%)'
+          : 'linear-gradient(to top, rgba(0,0,0,0.6) 0%, transparent 55%)',
         transition: 'background 0.4s ease',
         display: 'flex', flexDirection: 'column', justifyContent: 'flex-end',
-        padding: large ? '28px 32px' : '18px 20px',
+        padding: large ? '32px 36px' : '20px 22px',
       }}>
-        {/* 카테고리 — hover 시 나타남 */}
-        <div style={{
-          fontSize: 9, fontWeight: 700, letterSpacing: '0.22em',
-          textTransform: 'uppercase', color: 'var(--lime)',
-          marginBottom: 5,
-          opacity: hovered ? 1 : 0,
-          transform: hovered ? 'translateY(0)' : 'translateY(6px)',
-          transition: 'opacity 0.25s, transform 0.25s',
-        }}>
-          {catLabel[cat]}
-        </div>
-        {/* 제목 — 항상 표시 */}
+        {/* Meta — 프로젝트 역할 + 해결 방향 */}
+        {meta && (
+          <div style={{
+            opacity: hovered ? 1 : 0,
+            transform: hovered ? 'translateY(0)' : 'translateY(14px)',
+            transition: 'opacity 0.3s ease, transform 0.35s ease',
+            marginBottom: hovered ? 16 : 0,
+          }}>
+            <div style={{
+              fontSize: 9, fontWeight: 700, letterSpacing: '0.2em',
+              textTransform: 'uppercase', color: 'var(--lime)',
+              marginBottom: 10,
+            }}>
+              {meta.services}
+            </div>
+            <p style={{
+              fontSize: large ? 14 : 11,
+              fontWeight: 600,
+              color: 'rgba(255,255,255,0.88)',
+              lineHeight: 1.5,
+              letterSpacing: '-0.01em',
+            }}>
+              "{meta.quote}"
+            </p>
+          </div>
+        )}
+
+        {/* 카테고리 — meta 없을 때만 */}
+        {!meta && (
+          <div style={{
+            fontSize: 9, fontWeight: 700, letterSpacing: '0.22em',
+            textTransform: 'uppercase', color: 'var(--lime)',
+            marginBottom: 5,
+            opacity: hovered ? 1 : 0,
+            transform: hovered ? 'translateY(0)' : 'translateY(6px)',
+            transition: 'opacity 0.25s, transform 0.25s',
+          }}>
+            {catLabel[cat]}
+          </div>
+        )}
+
         <div style={{
           fontSize: large ? 17 : 13,
           fontWeight: 700,
@@ -203,7 +233,6 @@ function WorkCard({
         }}>
           {item.title}
         </div>
-        {/* 클라이언트 · 연도 — 항상 표시 */}
         <div style={{ fontSize: 11, color: 'rgba(255,255,255,0.55)', letterSpacing: '0.02em' }}>
           {item.client} · {item.year}
         </div>
@@ -323,23 +352,35 @@ export default function Portfolio() {
         {/* Editorial grid — featured */}
         <div style={{ display: 'flex', flexDirection: 'column', gap: 2 }}>
 
-          {/* Row 1: 2fr | 1fr — 양쪽 동시에 즉시 표시 */}
+          {/* Row 1: 2fr | 1fr */}
           <div className="nd-work-grid">
             <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ duration: 0.6, delay: 0.1 }}>
-              <WorkCard item={featuredVisual} cat="visual" onClick={() => open(featuredVisual, 'visual')} large />
+              <WorkCard
+                item={featuredVisual} cat="visual" onClick={() => open(featuredVisual, 'visual')} large
+                meta={{ services: 'Brand Identity · Web', quote: '기술 중심 제조기업의 신뢰도를 브랜드 경험으로 전환' }}
+              />
             </motion.div>
             <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ duration: 0.6, delay: 0.25 }}>
-              <WorkCard item={featuredWeb} cat="web" onClick={() => open(featuredWeb, 'web')} large />
+              <WorkCard
+                item={featuredWeb} cat="web" onClick={() => open(featuredWeb, 'web')} large
+                meta={{ services: 'Web Design', quote: '디지털 경험이 곧 브랜드임을 증명' }}
+              />
             </motion.div>
           </div>
 
           {/* Row 2: 1fr | 2fr */}
           <div className="nd-work-grid-reverse">
             <motion.div initial={{ opacity: 0 }} whileInView={{ opacity: 1 }} viewport={{ once: true }} transition={{ duration: 0.5 }}>
-              <WorkCard item={featuredPhoto} cat="photo" onClick={() => open(featuredPhoto, 'photo')} large />
+              <WorkCard
+                item={featuredPhoto} cat="photo" onClick={() => open(featuredPhoto, 'photo')} large
+                meta={{ services: 'Photography', quote: '제품이 아니라 감각을 촬영' }}
+              />
             </motion.div>
             <motion.div initial={{ opacity: 0 }} whileInView={{ opacity: 1 }} viewport={{ once: true }} transition={{ duration: 0.5, delay: 0.1 }}>
-              <WorkCard item={featuredMarketing} cat="marketing" onClick={() => open(featuredMarketing, 'marketing')} large />
+              <WorkCard
+                item={featuredMarketing} cat="marketing" onClick={() => open(featuredMarketing, 'marketing')} large
+                meta={{ services: 'Marketing', quote: '노출이 아닌 관계를 설계' }}
+              />
             </motion.div>
           </div>
 

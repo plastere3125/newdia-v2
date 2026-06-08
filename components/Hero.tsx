@@ -89,12 +89,12 @@ export default function Hero() {
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.9, delay: 0.3, ease: [0.22, 1, 0.36, 1] }}
             style={{
-              fontSize: 'clamp(52px, 10vw, 128px)',
+              fontSize: 'clamp(80px, 13vw, 200px)',
               fontWeight: 800,
-              letterSpacing: '-0.055em',
-              lineHeight: 0.92,
+              letterSpacing: '-0.06em',
+              lineHeight: 0.88,
               color: 'var(--black)',
-              marginBottom: 48,
+              marginBottom: 64,
             }}
           >
             브랜드를<br />
