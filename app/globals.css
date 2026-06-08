@@ -147,6 +147,14 @@ ul { list-style: none; padding: 0; margin: 0; }
   gap: 2px;
 }
 
+/* ─── Hero mobile ─── */
+@media (max-width: 768px) {
+  .nd-hero-line  { display: none !important; }
+  .nd-hero-stats { display: none !important; }
+  .nd-hero-stats-mobile { display: flex !important; }
+  .nd-hero-container { padding-right: 20px !important; }
+}
+
 /* ─── Divider ─── */
 .nd-rule {
   border: none;

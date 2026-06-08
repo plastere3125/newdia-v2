@@ -35,26 +35,26 @@ export default function Hero() {
         opacity: 0.5,
       }} />
 
-      {/* Lime right column accent */}
+      {/* Lime right accent line — desktop only */}
       <motion.div
         initial={{ scaleY: 0, transformOrigin: 'top' }}
         animate={{ scaleY: 1 }}
         transition={{ duration: 1.4, delay: 0.1, ease: [0.22, 1, 0.36, 1] }}
+        className="nd-hero-line"
         style={{
           position: 'absolute',
-          top: 0,
-          right: 96,
-          width: 2,
-          height: '100%',
+          top: 0, right: 96,
+          width: 2, height: '100%',
           background: 'var(--lime)',
         }}
       />
 
-      {/* Stat column — right of lime line */}
+      {/* Stat column — desktop only */}
       <motion.div
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
         transition={{ duration: 0.8, delay: 1.0 }}
+        className="nd-hero-stats"
         style={{
           position: 'absolute',
           top: '50%',
@@ -80,7 +80,7 @@ export default function Hero() {
       </motion.div>
 
       {/* Main content */}
-      <div className="nd-container" style={{ position: 'relative', zIndex: 1, paddingBottom: 0 }}>
+      <div className="nd-container nd-hero-container" style={{ position: 'relative', zIndex: 1 }}>
         <div style={{ maxWidth: 800 }}>
 
           {/* Headline */}
@@ -89,7 +89,7 @@ export default function Hero() {
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.9, delay: 0.3, ease: [0.22, 1, 0.36, 1] }}
             style={{
-              fontSize: 'clamp(64px, 10vw, 128px)',
+              fontSize: 'clamp(52px, 10vw, 128px)',
               fontWeight: 800,
               letterSpacing: '-0.055em',
               lineHeight: 0.92,
@@ -119,16 +119,36 @@ export default function Hero() {
                 style={{
                   flex: 1,
                   padding: '14px 0',
-                  paddingLeft: i > 0 ? 20 : 0,
+                  paddingLeft: i > 0 ? 16 : 0,
                   borderLeft: i > 0 ? '1px solid var(--gray-200)' : 'none',
                   fontSize: 10,
                   fontWeight: 700,
-                  letterSpacing: '0.14em',
+                  letterSpacing: '0.12em',
                   textTransform: 'uppercase',
                   color: 'var(--gray-600)',
                 }}
               >
                 {d}
+              </div>
+            ))}
+          </motion.div>
+
+          {/* Mobile stats row */}
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ duration: 0.6, delay: 0.9 }}
+            className="nd-hero-stats-mobile"
+            style={{ display: 'none', gap: 32, marginBottom: 40 }}
+          >
+            {stats.map(s => (
+              <div key={s.label}>
+                <div style={{ fontSize: 22, fontWeight: 800, letterSpacing: '-0.04em', lineHeight: 1, color: 'var(--black)' }}>
+                  {s.num}
+                </div>
+                <div style={{ fontSize: 9, fontWeight: 700, letterSpacing: '0.18em', textTransform: 'uppercase', color: 'var(--gray-400)', marginTop: 4 }}>
+                  {s.label}
+                </div>
               </div>
             ))}
           </motion.div>
@@ -155,7 +175,7 @@ export default function Hero() {
         </div>
       </div>
 
-      {/* Scroll line */}
+      {/* Scroll indicator */}
       <motion.div
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
@@ -165,9 +185,6 @@ export default function Hero() {
           bottom: 0,
           left: '50%',
           transform: 'translateX(-50%)',
-          display: 'flex',
-          flexDirection: 'column',
-          alignItems: 'center',
         }}
       >
         <motion.div

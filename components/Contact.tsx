@@ -29,7 +29,7 @@ export default function Contact() {
               }}>
                 Let's Work<br />Together.
               </h2>
-              <p style={{ fontSize: 15, color: 'rgba(0,0,0,0.55)', lineHeight: 1.6 }}>
+              <p style={{ fontSize: 15, color: 'rgba(0,0,0,0.7)', lineHeight: 1.6 }}>
                 무료 상담을 통해 귀사에 맞는 최적의 솔루션을 제안해 드립니다.
               </p>
             </div>
@@ -66,8 +66,7 @@ export default function Contact() {
             {/* Left */}
             <motion.div
               initial={{ opacity: 0, x: -20 }}
-              whileInView={{ opacity: 1, x: 0 }}
-              viewport={{ once: true }}
+              animate={{ opacity: 1, x: 0 }}
               transition={{ duration: 0.6 }}
             >
               <span className="nd-label" style={{ marginBottom: 20 }}>Contact</span>
@@ -104,8 +103,7 @@ export default function Contact() {
             {/* Right */}
             <motion.div
               initial={{ opacity: 0, x: 20 }}
-              whileInView={{ opacity: 1, x: 0 }}
-              viewport={{ once: true }}
+              animate={{ opacity: 1, x: 0 }}
               transition={{ duration: 0.6, delay: 0.15 }}
               style={{ paddingTop: 8 }}
             >
@@ -121,14 +119,14 @@ export default function Contact() {
                   {item.href ? (
                     <a
                       href={item.href}
-                      style={{ fontSize: 15, color: 'rgba(255,255,255,0.7)', transition: 'color 0.2s' }}
+                      style={{ fontSize: 15, color: 'rgba(255,255,255,0.92)', transition: 'color 0.2s' }}
                       onMouseEnter={e => (e.currentTarget.style.color = 'var(--white)')}
                       onMouseLeave={e => (e.currentTarget.style.color = 'rgba(255,255,255,0.7)')}
                     >
                       {item.value}
                     </a>
                   ) : (
-                    <span style={{ fontSize: 15, color: 'rgba(255,255,255,0.7)' }}>{item.value}</span>
+                    <span style={{ fontSize: 15, color: 'rgba(255,255,255,0.92)' }}>{item.value}</span>
                   )}
                 </div>
               ))}

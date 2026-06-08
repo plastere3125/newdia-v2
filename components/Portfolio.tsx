@@ -321,31 +321,37 @@ export default function Portfolio() {
         </div>
 
         {/* Editorial grid — featured */}
-        <div style={{ display: 'flex', flexDirection: 'column', gap: 2, marginBottom: 2 }}>
-          {/* Row 1: large left + small right */}
+        <div style={{ display: 'flex', flexDirection: 'column', gap: 2 }}>
+
+          {/* Row 1: 2fr | 1fr — 양쪽 동시에 즉시 표시 */}
           <div className="nd-work-grid">
-            <motion.div initial={{ opacity: 0 }} whileInView={{ opacity: 1 }} viewport={{ once: true }} transition={{ duration: 0.5 }}>
+            <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ duration: 0.6, delay: 0.1 }}>
               <WorkCard item={featuredVisual} cat="visual" onClick={() => open(featuredVisual, 'visual')} large />
             </motion.div>
-            <div style={{ display: 'flex', flexDirection: 'column', gap: 2 }}>
-              <motion.div initial={{ opacity: 0 }} whileInView={{ opacity: 1 }} viewport={{ once: true }} transition={{ duration: 0.5, delay: 0.1 }} style={{ flex: 1 }}>
-                <WorkCard item={featuredWeb} cat="web" onClick={() => open(featuredWeb, 'web')} />
-              </motion.div>
-              <motion.div initial={{ opacity: 0 }} whileInView={{ opacity: 1 }} viewport={{ once: true }} transition={{ duration: 0.5, delay: 0.2 }} style={{ flex: 1 }}>
-                <WorkCard item={featuredPhoto} cat="photo" onClick={() => open(featuredPhoto, 'photo')} />
-              </motion.div>
-            </div>
+            <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ duration: 0.6, delay: 0.25 }}>
+              <WorkCard item={featuredWeb} cat="web" onClick={() => open(featuredWeb, 'web')} large />
+            </motion.div>
           </div>
 
-          {/* Row 2: small left + large right */}
+          {/* Row 2: 1fr | 2fr */}
           <div className="nd-work-grid-reverse">
-            <motion.div initial={{ opacity: 0 }} whileInView={{ opacity: 1 }} viewport={{ once: true }} transition={{ duration: 0.5, delay: 0.1 }}>
-              <WorkCard item={featuredMarketing} cat="marketing" onClick={() => open(featuredMarketing, 'marketing')} />
-            </motion.div>
             <motion.div initial={{ opacity: 0 }} whileInView={{ opacity: 1 }} viewport={{ once: true }} transition={{ duration: 0.5 }}>
-              <WorkCard item={featuredVisual2} cat="visual" onClick={() => open(featuredVisual2, 'visual')} large />
+              <WorkCard item={featuredPhoto} cat="photo" onClick={() => open(featuredPhoto, 'photo')} large />
+            </motion.div>
+            <motion.div initial={{ opacity: 0 }} whileInView={{ opacity: 1 }} viewport={{ once: true }} transition={{ duration: 0.5, delay: 0.1 }}>
+              <WorkCard item={featuredMarketing} cat="marketing" onClick={() => open(featuredMarketing, 'marketing')} large />
             </motion.div>
           </div>
+
+          {/* Row 3: 3-equal */}
+          <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr 1fr', gap: 2 }}>
+            {[siteData.gallery.visual[5], siteData.gallery.web[1], siteData.gallery.photo[3]].map((item, i) => (
+              <motion.div key={item.id} initial={{ opacity: 0 }} whileInView={{ opacity: 1 }} viewport={{ once: true }} transition={{ duration: 0.4, delay: i * 0.08 }}>
+                <WorkCard item={item} cat={i === 1 ? 'web' : i === 2 ? 'photo' : 'visual'} onClick={() => open(item, i === 1 ? 'web' : i === 2 ? 'photo' : 'visual')} />
+              </motion.div>
+            ))}
+          </div>
+
         </div>
 
         {/* All work — expandable */}
