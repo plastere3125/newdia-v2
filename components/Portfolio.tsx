@@ -2,17 +2,25 @@
 
 import { useState } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
-import Image from 'next/image'
 import { siteData, type PortfolioCategory, type PortfolioItem } from '@/data/portfolio'
 
+// ─── Category label mapping ───────────────────────────────
+const catLabel: Record<PortfolioCategory, string> = {
+  visual: 'Brand & Visual',
+  web: 'Web Design',
+  photo: 'Photography',
+  marketing: 'Marketing',
+}
+
 const categories: { key: PortfolioCategory; label: string }[] = [
-  { key: 'visual', label: 'Visual Design' },
+  { key: 'visual', label: 'Brand & Visual' },
   { key: 'web', label: 'Web Design' },
   { key: 'photo', label: 'Photography' },
   { key: 'marketing', label: 'Marketing' },
 ]
 
-function PortfolioModal({ item, onClose }: { item: PortfolioItem; onClose: () => void }) {
+// ─── Modal ────────────────────────────────────────────────
+function WorkModal({ item, cat, onClose }: { item: PortfolioItem; cat: PortfolioCategory; onClose: () => void }) {
   const [imgIdx, setImgIdx] = useState(0)
   const allImages = [item.thumbnail, ...item.images]
 
@@ -21,34 +29,33 @@ function PortfolioModal({ item, onClose }: { item: PortfolioItem; onClose: () =>
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}
       exit={{ opacity: 0 }}
+      transition={{ duration: 0.2 }}
       style={{
-        position: 'fixed',
-        inset: 0,
-        zIndex: 9000,
-        background: 'rgba(0,0,0,0.92)',
-        display: 'flex',
-        alignItems: 'center',
-        justifyContent: 'center',
+        position: 'fixed', inset: 0, zIndex: 9000,
+        background: 'rgba(0,0,0,0.94)',
+        display: 'flex', alignItems: 'center', justifyContent: 'center',
         padding: 24,
       }}
       onClick={onClose}
     >
       <motion.div
-        initial={{ scale: 0.95, opacity: 0 }}
+        initial={{ scale: 0.97, opacity: 0 }}
         animate={{ scale: 1, opacity: 1 }}
-        exit={{ scale: 0.95, opacity: 0 }}
-        transition={{ duration: 0.25 }}
+        exit={{ scale: 0.97, opacity: 0 }}
+        transition={{ duration: 0.22 }}
         style={{
           background: 'var(--white)',
-          maxWidth: 900,
+          maxWidth: 960,
           width: '100%',
-          maxHeight: '90vh',
+          maxHeight: '92vh',
           overflow: 'auto',
+          display: 'grid',
+          gridTemplateColumns: '1fr 360px',
         }}
         onClick={e => e.stopPropagation()}
       >
-        {/* Main image */}
-        <div style={{ position: 'relative', aspectRatio: '16/9', background: 'var(--gray-100)' }}>
+        {/* Image */}
+        <div style={{ position: 'relative', background: 'var(--gray-100)', aspectRatio: '4/3' }}>
           <img
             src={allImages[imgIdx]}
             alt={item.title}
@@ -57,64 +64,66 @@ function PortfolioModal({ item, onClose }: { item: PortfolioItem; onClose: () =>
           <button
             onClick={onClose}
             style={{
-              position: 'absolute',
-              top: 16,
-              right: 16,
-              width: 40,
-              height: 40,
-              background: 'rgba(0,0,0,0.6)',
+              position: 'absolute', top: 16, right: 16,
+              width: 36, height: 36,
+              background: 'rgba(0,0,0,0.7)',
               color: 'white',
-              fontSize: 20,
-              display: 'flex',
-              alignItems: 'center',
-              justifyContent: 'center',
+              fontSize: 18,
+              display: 'flex', alignItems: 'center', justifyContent: 'center',
             }}
-          >
-            ×
-          </button>
+          >×</button>
         </div>
 
-        {/* Thumbnails */}
-        {allImages.length > 1 && (
-          <div style={{ display: 'flex', gap: 8, padding: '12px 24px', background: 'var(--gray-100)', overflowX: 'auto' }}>
-            {allImages.map((img, i) => (
-              <button
-                key={i}
-                onClick={() => setImgIdx(i)}
-                style={{
-                  width: 72,
-                  height: 48,
-                  flexShrink: 0,
-                  outline: i === imgIdx ? '2px solid var(--lime)' : '2px solid transparent',
-                  outlineOffset: 1,
-                  cursor: 'pointer',
-                }}
-              >
-                <img src={img} alt="" style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
-              </button>
-            ))}
-          </div>
-        )}
-
-        {/* Info */}
-        <div style={{ padding: '24px 32px 32px' }}>
-          <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', marginBottom: 12 }}>
-            <div>
-              <span className="nd-label" style={{ marginBottom: 8 }}>{item.client}</span>
-              <h3 style={{ fontSize: 24, fontWeight: 600, letterSpacing: '-0.02em' }}>{item.title}</h3>
+        {/* Info panel */}
+        <div style={{ padding: '40px 36px', display: 'flex', flexDirection: 'column', justifyContent: 'space-between' }}>
+          <div>
+            <div style={{ fontSize: 10, fontWeight: 700, letterSpacing: '0.22em', textTransform: 'uppercase', color: 'var(--lime)', marginBottom: 12 }}>
+              {catLabel[cat]}
             </div>
-            <span style={{ fontSize: 13, color: 'var(--gray-400)', fontWeight: 600 }}>{item.year}</span>
+            <h3 style={{ fontSize: 22, fontWeight: 700, letterSpacing: '-0.03em', lineHeight: 1.2, marginBottom: 8, color: 'var(--black)' }}>
+              {item.title}
+            </h3>
+            <div style={{ fontSize: 13, color: 'var(--gray-400)', fontWeight: 500, marginBottom: 28 }}>
+              {item.client} · {item.year}
+            </div>
+            <p style={{ fontSize: 14, lineHeight: 1.75, color: 'var(--gray-600)' }}>
+              {item.description}
+            </p>
           </div>
-          <p style={{ fontSize: 15, lineHeight: 1.7, color: 'var(--gray-600)' }}>{item.description}</p>
+
+          {/* Thumbnails */}
+          {allImages.length > 1 && (
+            <div style={{ marginTop: 32 }}>
+              <div style={{ fontSize: 10, fontWeight: 700, letterSpacing: '0.15em', textTransform: 'uppercase', color: 'var(--gray-400)', marginBottom: 12 }}>
+                Images
+              </div>
+              <div style={{ display: 'flex', gap: 6, flexWrap: 'wrap' }}>
+                {allImages.map((img, i) => (
+                  <button
+                    key={i}
+                    onClick={() => setImgIdx(i)}
+                    style={{
+                      width: 52, height: 36, flexShrink: 0,
+                      outline: i === imgIdx ? '2px solid var(--black)' : '2px solid transparent',
+                      outlineOffset: 1,
+                    }}
+                  >
+                    <img src={img} alt="" style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
+                  </button>
+                ))}
+              </div>
+            </div>
+          )}
+
           {item.external_site_url && (
             <a
               href={item.external_site_url}
               target="_blank"
               rel="noopener noreferrer"
               className="nd-btn-outline"
-              style={{ marginTop: 20 }}
+              style={{ marginTop: 32, justifyContent: 'center' }}
             >
-              Visit Website →
+              Visit Site →
             </a>
           )}
         </div>
@@ -123,128 +132,274 @@ function PortfolioModal({ item, onClose }: { item: PortfolioItem; onClose: () =>
   )
 }
 
+// ─── Featured editorial card ─────────────────────────────
+function WorkCard({
+  item,
+  cat,
+  onClick,
+  large = false,
+}: {
+  item: PortfolioItem
+  cat: PortfolioCategory
+  onClick: () => void
+  large?: boolean
+}) {
+  const [hovered, setHovered] = useState(false)
+
+  return (
+    <button
+      onClick={onClick}
+      onMouseEnter={() => setHovered(true)}
+      onMouseLeave={() => setHovered(false)}
+      style={{
+        position: 'relative',
+        aspectRatio: large ? '16/10' : '4/3',
+        overflow: 'hidden',
+        background: 'var(--gray-100)',
+        display: 'block',
+        width: '100%',
+        cursor: 'pointer',
+      }}
+    >
+      <img
+        src={item.thumbnail}
+        alt={item.title}
+        style={{
+          width: '100%', height: '100%', objectFit: 'cover',
+          transition: 'transform 0.6s cubic-bezier(0.22,1,0.36,1)',
+          transform: hovered ? 'scale(1.04)' : 'scale(1)',
+        }}
+      />
+      {/* Overlay */}
+      <div style={{
+        position: 'absolute', inset: 0,
+        background: hovered ? 'rgba(0,0,0,0.55)' : 'rgba(0,0,0,0)',
+        transition: 'background 0.4s ease',
+        display: 'flex', flexDirection: 'column', justifyContent: 'flex-end',
+        padding: large ? '32px 36px' : '20px 24px',
+      }}>
+        <motion.div
+          animate={{ opacity: hovered ? 1 : 0, y: hovered ? 0 : 10 }}
+          transition={{ duration: 0.25 }}
+        >
+          <div style={{ fontSize: 10, fontWeight: 700, letterSpacing: '0.2em', textTransform: 'uppercase', color: 'var(--lime)', marginBottom: 6 }}>
+            {catLabel[cat]}
+          </div>
+          <div style={{ fontSize: large ? 18 : 15, fontWeight: 600, color: 'white', letterSpacing: '-0.02em', marginBottom: 4 }}>
+            {item.title}
+          </div>
+          <div style={{ fontSize: 12, color: 'rgba(255,255,255,0.5)' }}>
+            {item.client} · {item.year}
+          </div>
+        </motion.div>
+      </div>
+    </button>
+  )
+}
+
+// ─── All-work list row ────────────────────────────────────
+function WorkRow({
+  item,
+  cat,
+  index,
+  onClick,
+}: {
+  item: PortfolioItem
+  cat: PortfolioCategory
+  index: number
+  onClick: () => void
+}) {
+  const [hovered, setHovered] = useState(false)
+
+  return (
+    <button
+      onClick={onClick}
+      onMouseEnter={() => setHovered(true)}
+      onMouseLeave={() => setHovered(false)}
+      style={{
+        display: 'grid',
+        gridTemplateColumns: '48px 1fr auto auto 36px',
+        alignItems: 'center',
+        gap: 24,
+        padding: '20px 0',
+        width: '100%',
+        borderBottom: '1px solid var(--gray-200)',
+        textAlign: 'left',
+        transition: 'padding-left 0.25s ease',
+        paddingLeft: hovered ? 12 : 0,
+        background: 'none',
+        cursor: 'pointer',
+      }}
+    >
+      <span style={{ fontSize: 11, fontWeight: 700, color: 'var(--gray-400)', letterSpacing: '0.1em' }}>
+        {String(index + 1).padStart(2, '0')}
+      </span>
+      <span style={{ fontSize: 16, fontWeight: 600, letterSpacing: '-0.02em', color: 'var(--black)' }}>
+        {item.title}
+      </span>
+      <span style={{ fontSize: 12, color: 'var(--gray-400)', whiteSpace: 'nowrap' }}>
+        {item.client}
+      </span>
+      <span style={{ fontSize: 12, color: 'var(--gray-400)', whiteSpace: 'nowrap' }}>
+        {item.year}
+      </span>
+      <span style={{ fontSize: 18, color: hovered ? 'var(--black)' : 'var(--gray-400)', transition: 'color 0.2s' }}>
+        →
+      </span>
+    </button>
+  )
+}
+
+// ─── Main Portfolio section ───────────────────────────────
 export default function Portfolio() {
   const [activeCategory, setActiveCategory] = useState<PortfolioCategory>('visual')
   const [selectedItem, setSelectedItem] = useState<PortfolioItem | null>(null)
+  const [selectedCat, setSelectedCat] = useState<PortfolioCategory>('visual')
+  const [showAll, setShowAll] = useState(false)
 
-  const items = siteData.gallery[activeCategory]
+  const open = (item: PortfolioItem, cat: PortfolioCategory) => {
+    setSelectedItem(item)
+    setSelectedCat(cat)
+  }
+
+  // Featured items across all categories
+  const featuredVisual = siteData.gallery.visual.slice(0, 1)[0]
+  const featuredWeb = siteData.gallery.web.slice(0, 1)[0]
+  const featuredPhoto = siteData.gallery.photo.slice(0, 1)[0]
+  const featuredMarketing = siteData.gallery.marketing.slice(0, 1)[0]
+  const featuredVisual2 = siteData.gallery.visual[5]
 
   return (
-    <section id="portfolio" className="nd-section" style={{ background: 'var(--white)' }}>
+    <section id="work" className="nd-section" style={{ background: 'var(--white)' }}>
       <div className="nd-container">
-        {/* Header */}
-        <div style={{ display: 'flex', alignItems: 'flex-end', justifyContent: 'space-between', marginBottom: 48, flexWrap: 'wrap', gap: 24 }}>
+
+        {/* Section header */}
+        <div style={{ display: 'flex', alignItems: 'flex-end', justifyContent: 'space-between', marginBottom: 48 }}>
           <div>
-            <span className="nd-label" style={{ marginBottom: 12 }}>Portfolio</span>
-            <h2 style={{ fontSize: 'clamp(28px, 4vw, 48px)', fontWeight: 600, letterSpacing: '-0.03em', lineHeight: 1.1 }}>
-              Selected Works
+            <span className="nd-label" style={{ marginBottom: 12 }}>Selected Work</span>
+            <h2 style={{
+              fontSize: 'clamp(32px, 4vw, 56px)',
+              fontWeight: 800,
+              letterSpacing: '-0.04em',
+              lineHeight: 1.0,
+              color: 'var(--black)',
+            }}>
+              작업물
             </h2>
           </div>
-          <div style={{ fontSize: 14, color: 'var(--gray-400)' }}>
-            {items.length} Projects
+          <button
+            onClick={() => setShowAll(v => !v)}
+            style={{
+              fontSize: 12, fontWeight: 600,
+              letterSpacing: '0.08em', textTransform: 'uppercase',
+              color: 'var(--gray-600)',
+              display: 'flex', alignItems: 'center', gap: 8,
+              paddingBottom: 8,
+              borderBottom: '1px solid var(--gray-200)',
+              transition: 'color 0.2s',
+            }}
+            onMouseEnter={e => (e.currentTarget.style.color = 'var(--black)')}
+            onMouseLeave={e => (e.currentTarget.style.color = 'var(--gray-600)')}
+          >
+            {showAll ? '접기' : '전체 보기'} {showAll ? '↑' : '↓'}
+          </button>
+        </div>
+
+        {/* Editorial grid — featured */}
+        <div style={{ display: 'flex', flexDirection: 'column', gap: 2, marginBottom: 2 }}>
+          {/* Row 1: large left + small right */}
+          <div className="nd-work-grid">
+            <motion.div initial={{ opacity: 0 }} whileInView={{ opacity: 1 }} viewport={{ once: true }} transition={{ duration: 0.5 }}>
+              <WorkCard item={featuredVisual} cat="visual" onClick={() => open(featuredVisual, 'visual')} large />
+            </motion.div>
+            <div style={{ display: 'flex', flexDirection: 'column', gap: 2 }}>
+              <motion.div initial={{ opacity: 0 }} whileInView={{ opacity: 1 }} viewport={{ once: true }} transition={{ duration: 0.5, delay: 0.1 }} style={{ flex: 1 }}>
+                <WorkCard item={featuredWeb} cat="web" onClick={() => open(featuredWeb, 'web')} />
+              </motion.div>
+              <motion.div initial={{ opacity: 0 }} whileInView={{ opacity: 1 }} viewport={{ once: true }} transition={{ duration: 0.5, delay: 0.2 }} style={{ flex: 1 }}>
+                <WorkCard item={featuredPhoto} cat="photo" onClick={() => open(featuredPhoto, 'photo')} />
+              </motion.div>
+            </div>
+          </div>
+
+          {/* Row 2: small left + large right */}
+          <div className="nd-work-grid-reverse">
+            <motion.div initial={{ opacity: 0 }} whileInView={{ opacity: 1 }} viewport={{ once: true }} transition={{ duration: 0.5, delay: 0.1 }}>
+              <WorkCard item={featuredMarketing} cat="marketing" onClick={() => open(featuredMarketing, 'marketing')} />
+            </motion.div>
+            <motion.div initial={{ opacity: 0 }} whileInView={{ opacity: 1 }} viewport={{ once: true }} transition={{ duration: 0.5 }}>
+              <WorkCard item={featuredVisual2} cat="visual" onClick={() => open(featuredVisual2, 'visual')} large />
+            </motion.div>
           </div>
         </div>
 
-        {/* Category Tabs */}
-        <div style={{ display: 'flex', gap: 0, marginBottom: 48, borderBottom: '1px solid var(--gray-200)' }}>
-          {categories.map(cat => (
-            <button
-              key={cat.key}
-              onClick={() => setActiveCategory(cat.key)}
-              style={{
-                padding: '12px 24px',
-                fontSize: 13,
-                fontWeight: 500,
-                letterSpacing: '0.02em',
-                color: activeCategory === cat.key ? 'var(--black)' : 'var(--gray-400)',
-                borderBottom: activeCategory === cat.key ? '2px solid var(--black)' : '2px solid transparent',
-                marginBottom: -1,
-                transition: 'all 0.2s ease',
-                whiteSpace: 'nowrap',
-              }}
+        {/* All work — expandable */}
+        <AnimatePresence>
+          {showAll && (
+            <motion.div
+              initial={{ opacity: 0, height: 0 }}
+              animate={{ opacity: 1, height: 'auto' }}
+              exit={{ opacity: 0, height: 0 }}
+              transition={{ duration: 0.4, ease: [0.22, 1, 0.36, 1] }}
+              style={{ overflow: 'hidden' }}
             >
-              {cat.label}
-            </button>
-          ))}
-        </div>
-
-        {/* Grid */}
-        <AnimatePresence mode="wait">
-          <motion.div
-            key={activeCategory}
-            initial={{ opacity: 0, y: 12 }}
-            animate={{ opacity: 1, y: 0 }}
-            exit={{ opacity: 0, y: -12 }}
-            transition={{ duration: 0.3 }}
-            style={{
-              display: 'grid',
-              gridTemplateColumns: 'repeat(auto-fill, minmax(280px, 1fr))',
-              gap: 2,
-            }}
-          >
-            {items.map((item, i) => (
-              <motion.button
-                key={item.id}
-                initial={{ opacity: 0 }}
-                animate={{ opacity: 1 }}
-                transition={{ delay: i * 0.03 }}
-                onClick={() => setSelectedItem(item)}
-                style={{
-                  position: 'relative',
-                  aspectRatio: '4/3',
-                  overflow: 'hidden',
-                  cursor: 'pointer',
-                  background: 'var(--gray-100)',
-                  display: 'block',
-                  width: '100%',
-                }}
-              >
-                <img
-                  src={item.thumbnail}
-                  alt={item.title}
-                  style={{ width: '100%', height: '100%', objectFit: 'cover', transition: 'transform 0.5s ease' }}
-                  onMouseEnter={e => (e.currentTarget.style.transform = 'scale(1.04)')}
-                  onMouseLeave={e => (e.currentTarget.style.transform = 'scale(1)')}
-                />
-                {/* Hover overlay */}
-                <div
-                  style={{
-                    position: 'absolute',
-                    inset: 0,
-                    background: 'rgba(0,0,0,0)',
-                    display: 'flex',
-                    flexDirection: 'column',
-                    justifyContent: 'flex-end',
-                    padding: '20px 20px',
-                    transition: 'background 0.3s ease',
-                  }}
-                  onMouseEnter={e => (e.currentTarget.style.background = 'rgba(0,0,0,0.6)')}
-                  onMouseLeave={e => (e.currentTarget.style.background = 'rgba(0,0,0,0)')}
-                >
-                  <div style={{ transform: 'translateY(8px)', transition: 'transform 0.3s ease, opacity 0.3s ease', opacity: 0 }}
-                    onMouseEnter={e => {
-                      e.currentTarget.style.opacity = '1'
-                      e.currentTarget.style.transform = 'translateY(0)'
-                    }}
-                  >
-                    <div style={{ fontSize: 12, fontWeight: 600, color: 'var(--lime)', letterSpacing: '0.1em', textTransform: 'uppercase', marginBottom: 4 }}>
-                      {item.client}
-                    </div>
-                    <div style={{ fontSize: 15, fontWeight: 600, color: 'white' }}>
-                      {item.title}
-                    </div>
-                  </div>
+              <div style={{ paddingTop: 64 }}>
+                {/* Category tabs */}
+                <div style={{ display: 'flex', gap: 0, marginBottom: 0, borderBottom: '1px solid var(--gray-200)' }}>
+                  {categories.map(cat => (
+                    <button
+                      key={cat.key}
+                      onClick={() => setActiveCategory(cat.key)}
+                      style={{
+                        padding: '12px 28px',
+                        fontSize: 11,
+                        fontWeight: 700,
+                        letterSpacing: '0.12em',
+                        textTransform: 'uppercase',
+                        color: activeCategory === cat.key ? 'var(--black)' : 'var(--gray-400)',
+                        borderBottom: activeCategory === cat.key ? '2px solid var(--black)' : '2px solid transparent',
+                        marginBottom: -1,
+                        transition: 'all 0.2s',
+                      }}
+                    >
+                      {cat.label}
+                    </button>
+                  ))}
                 </div>
-              </motion.button>
-            ))}
-          </motion.div>
+
+                {/* List */}
+                <AnimatePresence mode="wait">
+                  <motion.div
+                    key={activeCategory}
+                    initial={{ opacity: 0, y: 8 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    exit={{ opacity: 0 }}
+                    transition={{ duration: 0.25 }}
+                  >
+                    <div style={{ borderTop: 'none' }}>
+                      {siteData.gallery[activeCategory].map((item, i) => (
+                        <WorkRow
+                          key={item.id}
+                          item={item}
+                          cat={activeCategory}
+                          index={i}
+                          onClick={() => open(item, activeCategory)}
+                        />
+                      ))}
+                    </div>
+                  </motion.div>
+                </AnimatePresence>
+              </div>
+            </motion.div>
+          )}
         </AnimatePresence>
+
       </div>
 
       {/* Modal */}
       <AnimatePresence>
         {selectedItem && (
-          <PortfolioModal item={selectedItem} onClose={() => setSelectedItem(null)} />
+          <WorkModal item={selectedItem} cat={selectedCat} onClose={() => setSelectedItem(null)} />
         )}
       </AnimatePresence>
     </section>

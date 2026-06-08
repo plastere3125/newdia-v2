@@ -2,52 +2,55 @@
 
 import { motion } from 'framer-motion'
 
-export default function Hero() {
-  const scrollToPortfolio = () => {
-    const el = document.querySelector('#portfolio')
-    if (el) el.scrollIntoView({ behavior: 'smooth' })
-  }
+const stats = [
+  { num: '10+', label: 'Years' },
+  { num: '200+', label: 'Projects' },
+  { num: '50+', label: 'Clients' },
+]
 
+const disciplines = ['Brand Identity', 'Web Design', 'Photography', 'Marketing']
+
+export default function Hero() {
   return (
     <section
       id="hero"
       style={{
         position: 'relative',
         height: '100vh',
-        minHeight: 700,
+        minHeight: 720,
         display: 'flex',
-        alignItems: 'center',
+        flexDirection: 'column',
+        justifyContent: 'flex-end',
         overflow: 'hidden',
         background: 'var(--white)',
+        paddingBottom: 0,
       }}
     >
-      {/* Architectural grid */}
-      <div
-        style={{
-          position: 'absolute',
-          inset: 0,
-          backgroundImage: 'linear-gradient(var(--gray-200) 1px, transparent 1px), linear-gradient(90deg, var(--gray-200) 1px, transparent 1px)',
-          backgroundSize: '60px 60px',
-          opacity: 0.55,
-        }}
-      />
+      {/* Grid background */}
+      <div style={{
+        position: 'absolute',
+        inset: 0,
+        backgroundImage: 'linear-gradient(var(--gray-200) 1px, transparent 1px), linear-gradient(90deg, var(--gray-200) 1px, transparent 1px)',
+        backgroundSize: '64px 64px',
+        opacity: 0.5,
+      }} />
 
-      {/* Lime vertical line */}
+      {/* Lime right column accent */}
       <motion.div
         initial={{ scaleY: 0, transformOrigin: 'top' }}
         animate={{ scaleY: 1 }}
-        transition={{ duration: 1.2, delay: 0.2, ease: [0.22, 1, 0.36, 1] }}
+        transition={{ duration: 1.4, delay: 0.1, ease: [0.22, 1, 0.36, 1] }}
         style={{
           position: 'absolute',
           top: 0,
-          right: 80,
+          right: 96,
           width: 2,
           height: '100%',
           background: 'var(--lime)',
         }}
       />
 
-      {/* Right-side stat column */}
+      {/* Stat column — right of lime line */}
       <motion.div
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
@@ -56,75 +59,71 @@ export default function Hero() {
           position: 'absolute',
           top: '50%',
           right: 0,
+          width: 96,
           transform: 'translateY(-50%)',
-          width: 80,
           display: 'flex',
           flexDirection: 'column',
           alignItems: 'center',
-          gap: 40,
+          gap: 36,
         }}
       >
-        {[
-          { num: '10+', label: 'YRS' },
-          { num: '200+', label: 'PRJ' },
-          { num: '50+', label: 'CLT' },
-        ].map(stat => (
-          <div key={stat.label} style={{ textAlign: 'center' }}>
-            <div style={{ fontSize: 18, fontWeight: 700, letterSpacing: '-0.03em', color: 'var(--black)', lineHeight: 1 }}>
-              {stat.num}
+        {stats.map(s => (
+          <div key={s.label} style={{ textAlign: 'center' }}>
+            <div style={{ fontSize: 20, fontWeight: 800, letterSpacing: '-0.04em', lineHeight: 1, color: 'var(--black)' }}>
+              {s.num}
             </div>
-            <div style={{ fontSize: 9, fontWeight: 700, letterSpacing: '0.18em', color: 'var(--gray-400)', marginTop: 4 }}>
-              {stat.label}
+            <div style={{ fontSize: 9, fontWeight: 700, letterSpacing: '0.2em', textTransform: 'uppercase', color: 'var(--gray-400)', marginTop: 5 }}>
+              {s.label}
             </div>
           </div>
         ))}
       </motion.div>
 
-      <div className="nd-container" style={{ position: 'relative', zIndex: 1 }}>
-        <div style={{ maxWidth: 680 }}>
+      {/* Main content */}
+      <div className="nd-container" style={{ position: 'relative', zIndex: 1, paddingBottom: 0 }}>
+        <div style={{ maxWidth: 800 }}>
 
+          {/* Headline */}
           <motion.h1
-            initial={{ opacity: 0, y: 32 }}
+            initial={{ opacity: 0, y: 40 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.9, delay: 0.4, ease: [0.22, 1, 0.36, 1] }}
+            transition={{ duration: 0.9, delay: 0.3, ease: [0.22, 1, 0.36, 1] }}
             style={{
-              fontSize: 'clamp(52px, 8vw, 100px)',
-              fontWeight: 700,
-              letterSpacing: '-0.05em',
-              lineHeight: 0.95,
+              fontSize: 'clamp(64px, 10vw, 128px)',
+              fontWeight: 800,
+              letterSpacing: '-0.055em',
+              lineHeight: 0.92,
               color: 'var(--black)',
               marginBottom: 48,
             }}
           >
             브랜드를<br />
-            <span style={{ color: 'var(--lime)' }}>결정짓는</span><br />
-            디자인.
+            <span style={{ color: 'var(--lime)' }}>결정합니다.</span>
           </motion.h1>
 
-          {/* Discipline row */}
+          {/* Discipline strip */}
           <motion.div
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             transition={{ duration: 0.6, delay: 0.8 }}
             style={{
               display: 'flex',
-              gap: 0,
-              marginBottom: 48,
               borderTop: '1px solid var(--gray-200)',
               borderBottom: '1px solid var(--gray-200)',
+              marginBottom: 48,
             }}
           >
-            {['Brand Identity', 'Web Design', 'Photography', 'Marketing'].map((d, i) => (
+            {disciplines.map((d, i) => (
               <div
                 key={d}
                 style={{
                   flex: 1,
-                  padding: '12px 0',
-                  borderRight: i < 3 ? '1px solid var(--gray-200)' : 'none',
-                  paddingLeft: i > 0 ? 16 : 0,
+                  padding: '14px 0',
+                  paddingLeft: i > 0 ? 20 : 0,
+                  borderLeft: i > 0 ? '1px solid var(--gray-200)' : 'none',
                   fontSize: 10,
-                  fontWeight: 600,
-                  letterSpacing: '0.12em',
+                  fontWeight: 700,
+                  letterSpacing: '0.14em',
                   textTransform: 'uppercase',
                   color: 'var(--gray-600)',
                 }}
@@ -134,59 +133,47 @@ export default function Hero() {
             ))}
           </motion.div>
 
+          {/* CTAs */}
           <motion.div
             initial={{ opacity: 0, y: 12 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.5, delay: 1.0 }}
-            style={{ display: 'flex', gap: 12, flexWrap: 'wrap' }}
+            style={{ display: 'flex', gap: 12, paddingBottom: 64 }}
           >
-            <button className="nd-btn-primary" onClick={scrollToPortfolio}>
-              Work
-              <span style={{ fontSize: 16 }}>→</span>
-            </button>
+            <a
+              href="#work"
+              className="nd-btn-primary"
+              onClick={e => { e.preventDefault(); document.querySelector('#work')?.scrollIntoView({ behavior: 'smooth' }) }}
+            >
+              Work <span style={{ fontSize: 15 }}>→</span>
+            </a>
             <a href="/consultation" className="nd-btn-outline">
-              문의하기
+              무료 상담
             </a>
           </motion.div>
 
-          <motion.p
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            transition={{ duration: 1.0, delay: 1.5 }}
-            style={{
-              fontSize: 9,
-              fontWeight: 700,
-              letterSpacing: '0.3em',
-              textTransform: 'uppercase',
-              color: 'var(--gray-400)',
-              marginTop: 32,
-            }}
-          >
-            NEW<span style={{ color: 'var(--lime)' }}>DIA</span> — A NEW ID
-          </motion.p>
         </div>
       </div>
 
-      {/* Scroll indicator */}
+      {/* Scroll line */}
       <motion.div
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
-        transition={{ delay: 1.8 }}
+        transition={{ delay: 1.6 }}
         style={{
           position: 'absolute',
-          bottom: 40,
+          bottom: 0,
           left: '50%',
           transform: 'translateX(-50%)',
           display: 'flex',
           flexDirection: 'column',
           alignItems: 'center',
-          gap: 8,
         }}
       >
         <motion.div
-          animate={{ y: [0, 8, 0] }}
-          transition={{ repeat: Infinity, duration: 1.8 }}
-          style={{ width: 1, height: 40, background: 'var(--gray-400)' }}
+          animate={{ scaleY: [1, 0.4, 1] }}
+          transition={{ repeat: Infinity, duration: 2, ease: 'easeInOut' }}
+          style={{ width: 1, height: 48, background: 'var(--gray-400)', transformOrigin: 'bottom' }}
         />
       </motion.div>
     </section>
