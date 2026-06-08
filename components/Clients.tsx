@@ -15,9 +15,9 @@ export default function Clients() {
       style={{
         borderTop: '1px solid var(--gray-200)',
         borderBottom: '1px solid var(--gray-200)',
-        background: 'var(--white)',
+        background: 'var(--black)',
         overflow: 'hidden',
-        padding: '18px 0',
+        padding: '22px 0',
       }}
     >
       <div className="nd-marquee-wrap">
@@ -36,13 +36,13 @@ export default function Clients() {
                 fontWeight: 700,
                 letterSpacing: '0.18em',
                 textTransform: 'uppercase',
-                color: 'var(--gray-400)',
+                color: 'rgba(255,255,255,0.45)',
                 whiteSpace: 'nowrap',
                 padding: '0 40px',
               }}>
                 {name}
               </span>
-              <span style={{ color: 'var(--lime)', fontSize: 14, fontWeight: 800, lineHeight: 1 }}>·</span>
+              <span style={{ color: 'var(--lime)', fontSize: 16, fontWeight: 800, lineHeight: 1 }}>·</span>
             </span>
           ))}
         </div>

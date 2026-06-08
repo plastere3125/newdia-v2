@@ -20,10 +20,10 @@ export default function Hero() {
         minHeight: 720,
         display: 'flex',
         flexDirection: 'column',
-        justifyContent: 'flex-end',
+        justifyContent: 'center',
         overflow: 'hidden',
         background: 'var(--white)',
-        paddingBottom: 0,
+        paddingTop: 'var(--header-h)',
       }}
     >
       {/* Grid background */}
@@ -138,7 +138,7 @@ export default function Hero() {
             initial={{ opacity: 0, y: 12 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.5, delay: 1.0 }}
-            style={{ display: 'flex', gap: 12, paddingBottom: 64 }}
+            style={{ display: 'flex', gap: 12 }}
           >
             <a
               href="#work"

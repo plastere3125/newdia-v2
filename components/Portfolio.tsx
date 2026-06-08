@@ -153,7 +153,7 @@ function WorkCard({
       onMouseLeave={() => setHovered(false)}
       style={{
         position: 'relative',
-        aspectRatio: large ? '16/10' : '4/3',
+        aspectRatio: large ? '16/9' : '4/3',
         overflow: 'hidden',
         background: 'var(--gray-100)',
         display: 'block',
@@ -164,34 +164,49 @@ function WorkCard({
       <img
         src={item.thumbnail}
         alt={item.title}
+        loading="eager"
         style={{
           width: '100%', height: '100%', objectFit: 'cover',
           transition: 'transform 0.6s cubic-bezier(0.22,1,0.36,1)',
           transform: hovered ? 'scale(1.04)' : 'scale(1)',
         }}
       />
-      {/* Overlay */}
+      {/* 항상 표시되는 하단 정보 바 */}
       <div style={{
         position: 'absolute', inset: 0,
-        background: hovered ? 'rgba(0,0,0,0.55)' : 'rgba(0,0,0,0)',
+        background: hovered
+          ? 'linear-gradient(to top, rgba(0,0,0,0.75) 0%, rgba(0,0,0,0.2) 50%, transparent 100%)'
+          : 'linear-gradient(to top, rgba(0,0,0,0.55) 0%, transparent 50%)',
         transition: 'background 0.4s ease',
         display: 'flex', flexDirection: 'column', justifyContent: 'flex-end',
-        padding: large ? '32px 36px' : '20px 24px',
+        padding: large ? '28px 32px' : '18px 20px',
       }}>
-        <motion.div
-          animate={{ opacity: hovered ? 1 : 0, y: hovered ? 0 : 10 }}
-          transition={{ duration: 0.25 }}
-        >
-          <div style={{ fontSize: 10, fontWeight: 700, letterSpacing: '0.2em', textTransform: 'uppercase', color: 'var(--lime)', marginBottom: 6 }}>
-            {catLabel[cat]}
-          </div>
-          <div style={{ fontSize: large ? 18 : 15, fontWeight: 600, color: 'white', letterSpacing: '-0.02em', marginBottom: 4 }}>
-            {item.title}
-          </div>
-          <div style={{ fontSize: 12, color: 'rgba(255,255,255,0.5)' }}>
-            {item.client} · {item.year}
-          </div>
-        </motion.div>
+        {/* 카테고리 — hover 시 나타남 */}
+        <div style={{
+          fontSize: 9, fontWeight: 700, letterSpacing: '0.22em',
+          textTransform: 'uppercase', color: 'var(--lime)',
+          marginBottom: 5,
+          opacity: hovered ? 1 : 0,
+          transform: hovered ? 'translateY(0)' : 'translateY(6px)',
+          transition: 'opacity 0.25s, transform 0.25s',
+        }}>
+          {catLabel[cat]}
+        </div>
+        {/* 제목 — 항상 표시 */}
+        <div style={{
+          fontSize: large ? 17 : 13,
+          fontWeight: 700,
+          color: 'white',
+          letterSpacing: '-0.02em',
+          lineHeight: 1.2,
+          marginBottom: 4,
+        }}>
+          {item.title}
+        </div>
+        {/* 클라이언트 · 연도 — 항상 표시 */}
+        <div style={{ fontSize: 11, color: 'rgba(255,255,255,0.55)', letterSpacing: '0.02em' }}>
+          {item.client} · {item.year}
+        </div>
       </div>
     </button>
   )
