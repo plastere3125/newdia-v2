@@ -30,7 +30,7 @@ export default function Contact() {
                 Let's Work<br />Together.
               </h2>
               <p style={{ fontSize: 15, color: 'rgba(0,0,0,0.7)', lineHeight: 1.6 }}>
-                무료 상담을 통해 귀사에 맞는 최적의 솔루션을 제안해 드립니다.
+                브랜드가 작동하는 구조를 함께 설계합니다.
               </p>
             </div>
             <div style={{ display: 'flex', flexDirection: 'column', gap: 12, alignItems: 'flex-end' }}>

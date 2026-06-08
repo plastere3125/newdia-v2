@@ -320,7 +320,7 @@ export default function Portfolio() {
         {/* Section header */}
         <div style={{ display: 'flex', alignItems: 'flex-end', justifyContent: 'space-between', marginBottom: 48 }}>
           <div>
-            <span className="nd-label" style={{ marginBottom: 12 }}>Selected Work</span>
+            <span className="nd-label" style={{ marginBottom: 12 }}>Frame Cases</span>
             <h2 style={{
               fontSize: 'clamp(32px, 4vw, 56px)',
               fontWeight: 800,
@@ -328,7 +328,7 @@ export default function Portfolio() {
               lineHeight: 1.0,
               color: 'var(--black)',
             }}>
-              작업물
+              브랜드 구조의 증거
             </h2>
           </div>
           <button

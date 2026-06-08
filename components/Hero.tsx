@@ -107,20 +107,40 @@ export default function Hero() {
         <motion.div
           style={{ maxWidth: '54%', x: textX, y: textY }}
         >
-          {/* Studio label */}
-          <motion.p
+          {/* Idea → Frame → Impact flow */}
+          <motion.div
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
-            transition={{ duration: 0.6, delay: 0.4 }}
-            style={{
-              fontSize: 10, fontWeight: 700,
-              letterSpacing: '0.28em', textTransform: 'uppercase',
-              color: 'rgba(255,255,255,0.28)',
-              marginBottom: 44,
-            }}
+            transition={{ duration: 0.6, delay: 0.3 }}
+            style={{ display: 'flex', alignItems: 'center', gap: 14, marginBottom: 44 }}
           >
-            Brand Design Studio — Seoul
-          </motion.p>
+            {['Idea', 'Frame', 'Impact'].map((word, i) => (
+              <div key={word} style={{ display: 'flex', alignItems: 'center', gap: 14 }}>
+                <motion.span
+                  initial={{ opacity: 0, y: 6 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ delay: 0.35 + i * 0.12 }}
+                  style={{
+                    fontSize: 10, fontWeight: 700,
+                    letterSpacing: '0.22em', textTransform: 'uppercase',
+                    color: i === 2 ? '#cbdb2a' : 'rgba(255,255,255,0.35)',
+                  }}
+                >
+                  {word}
+                </motion.span>
+                {i < 2 && (
+                  <motion.span
+                    initial={{ opacity: 0 }}
+                    animate={{ opacity: 1 }}
+                    transition={{ delay: 0.45 + i * 0.12 }}
+                    style={{ color: 'rgba(255,255,255,0.15)', fontSize: 11 }}
+                  >
+                    →
+                  </motion.span>
+                )}
+              </div>
+            ))}
+          </motion.div>
 
           {/* Headline */}
           <motion.h1
