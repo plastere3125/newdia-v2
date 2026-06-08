@@ -1,6 +1,5 @@
 'use client'
 
-import { useEffect, useRef } from 'react'
 import { motion } from 'framer-motion'
 
 export default function Hero() {
@@ -22,18 +21,18 @@ export default function Hero() {
         background: 'var(--white)',
       }}
     >
-      {/* Background grid */}
+      {/* Architectural grid */}
       <div
         style={{
           position: 'absolute',
           inset: 0,
           backgroundImage: 'linear-gradient(var(--gray-200) 1px, transparent 1px), linear-gradient(90deg, var(--gray-200) 1px, transparent 1px)',
-          backgroundSize: '80px 80px',
-          opacity: 0.4,
+          backgroundSize: '60px 60px',
+          opacity: 0.55,
         }}
       />
 
-      {/* Lime accent block */}
+      {/* Lime vertical line */}
       <motion.div
         initial={{ scaleY: 0, transformOrigin: 'top' }}
         animate={{ scaleY: 1 }}
@@ -43,125 +42,136 @@ export default function Hero() {
           top: 0,
           right: 80,
           width: 2,
-          height: '60%',
+          height: '100%',
           background: 'var(--lime)',
         }}
       />
 
+      {/* Right-side stat column */}
+      <motion.div
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        transition={{ duration: 0.8, delay: 1.0 }}
+        style={{
+          position: 'absolute',
+          top: '50%',
+          right: 0,
+          transform: 'translateY(-50%)',
+          width: 80,
+          display: 'flex',
+          flexDirection: 'column',
+          alignItems: 'center',
+          gap: 40,
+        }}
+      >
+        {[
+          { num: '10+', label: 'YRS' },
+          { num: '200+', label: 'PRJ' },
+          { num: '50+', label: 'CLT' },
+        ].map(stat => (
+          <div key={stat.label} style={{ textAlign: 'center' }}>
+            <div style={{ fontSize: 18, fontWeight: 700, letterSpacing: '-0.03em', color: 'var(--black)', lineHeight: 1 }}>
+              {stat.num}
+            </div>
+            <div style={{ fontSize: 9, fontWeight: 700, letterSpacing: '0.18em', color: 'var(--gray-400)', marginTop: 4 }}>
+              {stat.label}
+            </div>
+          </div>
+        ))}
+      </motion.div>
+
       <div className="nd-container" style={{ position: 'relative', zIndex: 1 }}>
-        <div style={{ maxWidth: 700 }}>
-          <motion.span
-            className="nd-label"
-            initial={{ opacity: 0, y: 16 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6, delay: 0.3 }}
-            style={{ marginBottom: 24 }}
-          >
-            Structure Engine
-          </motion.span>
+        <div style={{ maxWidth: 680 }}>
 
           <motion.h1
-            initial={{ opacity: 0, y: 24 }}
+            initial={{ opacity: 0, y: 32 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8, delay: 0.5 }}
+            transition={{ duration: 0.9, delay: 0.4, ease: [0.22, 1, 0.36, 1] }}
             style={{
-              fontSize: 'clamp(48px, 7vw, 88px)',
-              fontWeight: 600,
-              letterSpacing: '-0.04em',
-              lineHeight: 1.0,
+              fontSize: 'clamp(52px, 8vw, 100px)',
+              fontWeight: 700,
+              letterSpacing: '-0.05em',
+              lineHeight: 0.95,
               color: 'var(--black)',
-              marginBottom: 32,
+              marginBottom: 48,
             }}
           >
-            Frame the Reality.
-            <br />
-            <span style={{ color: 'var(--lime)' }}>Build the Impact.</span>
+            브랜드를<br />
+            <span style={{ color: 'var(--lime)' }}>결정짓는</span><br />
+            디자인.
           </motion.h1>
 
-          <motion.p
-            initial={{ opacity: 0, y: 16 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6, delay: 0.7 }}
+          {/* Discipline row */}
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ duration: 0.6, delay: 0.8 }}
             style={{
-              fontSize: 17,
-              lineHeight: 1.7,
-              color: 'var(--gray-600)',
+              display: 'flex',
+              gap: 0,
               marginBottom: 48,
-              maxWidth: 480,
+              borderTop: '1px solid var(--gray-200)',
+              borderBottom: '1px solid var(--gray-200)',
             }}
           >
-            브랜드 아이덴티티를 구조화하고,<br />
-            새로운 현실로 프레이밍합니다.
-          </motion.p>
+            {['Brand Identity', 'Web Design', 'Photography', 'Marketing'].map((d, i) => (
+              <div
+                key={d}
+                style={{
+                  flex: 1,
+                  padding: '12px 0',
+                  borderRight: i < 3 ? '1px solid var(--gray-200)' : 'none',
+                  paddingLeft: i > 0 ? 16 : 0,
+                  fontSize: 10,
+                  fontWeight: 600,
+                  letterSpacing: '0.12em',
+                  textTransform: 'uppercase',
+                  color: 'var(--gray-600)',
+                }}
+              >
+                {d}
+              </div>
+            ))}
+          </motion.div>
 
           <motion.div
-            initial={{ opacity: 0, y: 16 }}
+            initial={{ opacity: 0, y: 12 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6, delay: 0.9 }}
-            style={{ display: 'flex', gap: 16, flexWrap: 'wrap' }}
+            transition={{ duration: 0.5, delay: 1.0 }}
+            style={{ display: 'flex', gap: 12, flexWrap: 'wrap' }}
           >
             <button className="nd-btn-primary" onClick={scrollToPortfolio}>
-              Explore Work
-              <span style={{ fontSize: 18 }}>→</span>
+              Work
+              <span style={{ fontSize: 16 }}>→</span>
             </button>
             <a href="/consultation" className="nd-btn-outline">
-              무료 상담 신청
+              문의하기
             </a>
           </motion.div>
 
-          {/* A NEW ID anagram hint */}
           <motion.p
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
-            transition={{ duration: 1.0, delay: 1.4 }}
+            transition={{ duration: 1.0, delay: 1.5 }}
             style={{
-              fontSize: 10,
-              fontWeight: 600,
-              letterSpacing: '0.28em',
+              fontSize: 9,
+              fontWeight: 700,
+              letterSpacing: '0.3em',
               textTransform: 'uppercase',
               color: 'var(--gray-400)',
-              marginTop: 28,
+              marginTop: 32,
             }}
           >
             NEW<span style={{ color: 'var(--lime)' }}>DIA</span> — A NEW ID
           </motion.p>
         </div>
-
-        {/* Stats */}
-        <motion.div
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          transition={{ duration: 0.8, delay: 1.2 }}
-          style={{
-            position: 'absolute',
-            bottom: -120,
-            right: 0,
-            display: 'flex',
-            gap: 48,
-          }}
-        >
-          {[
-            { num: '10+', label: 'Years' },
-            { num: '200+', label: 'Projects' },
-            { num: '50+', label: 'Clients' },
-          ].map(stat => (
-            <div key={stat.label} style={{ textAlign: 'center' }}>
-              <div style={{ fontSize: 28, fontWeight: 700, letterSpacing: '-0.03em', color: 'var(--black)' }}>
-                {stat.num}
-              </div>
-              <div style={{ fontSize: 11, fontWeight: 600, letterSpacing: '0.15em', textTransform: 'uppercase', color: 'var(--gray-400)' }}>
-                {stat.label}
-              </div>
-            </div>
-          ))}
-        </motion.div>
       </div>
 
       {/* Scroll indicator */}
       <motion.div
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
-        transition={{ delay: 1.5 }}
+        transition={{ delay: 1.8 }}
         style={{
           position: 'absolute',
           bottom: 40,
@@ -173,11 +183,10 @@ export default function Hero() {
           gap: 8,
         }}
       >
-        <span style={{ fontSize: 10, fontWeight: 600, letterSpacing: '0.2em', textTransform: 'uppercase', color: 'var(--gray-400)' }}>Scroll</span>
         <motion.div
           animate={{ y: [0, 8, 0] }}
-          transition={{ repeat: Infinity, duration: 1.5 }}
-          style={{ width: 1, height: 32, background: 'var(--gray-400)' }}
+          transition={{ repeat: Infinity, duration: 1.8 }}
+          style={{ width: 1, height: 40, background: 'var(--gray-400)' }}
         />
       </motion.div>
     </section>

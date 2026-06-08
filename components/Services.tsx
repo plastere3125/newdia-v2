@@ -6,29 +6,25 @@ const services = [
   {
     num: '01',
     title: 'Brand Identity',
-    en: 'Frame the Structure',
-    description: '브랜드의 본질을 시각 구조로 프레이밍합니다. CI/BI 시스템을 설계하고 아이덴티티를 현실로 구현합니다.',
+    description: 'CI/BI 시스템 설계부터 브랜드 가이드라인까지. 브랜드의 첫 인상을 완성합니다.',
     href: '#portfolio',
   },
   {
     num: '02',
     title: 'Web Design',
-    en: 'Build the Reality',
-    description: '디지털 경험을 구조화하여 브랜드 현실로 만듭니다. 시스템 기반 반응형 웹사이트를 설계하고 개발합니다.',
+    description: '브랜드 경험을 디지털로 확장합니다. 시스템 기반 반응형 웹사이트.',
     href: '#portfolio',
   },
   {
     num: '03',
     title: 'Photography',
-    en: 'Capture the Frame',
-    description: '브랜드 스토리를 시각적 프레임으로 포착합니다. 제품, 인물, 공간의 본질을 구조적 렌즈로 담습니다.',
+    description: '제품, 인물, 공간. 브랜드 스토리를 이미지로 완성합니다.',
     href: '#portfolio',
   },
   {
     num: '04',
     title: 'Marketing',
-    en: 'Amplify the Impact',
-    description: '브랜드 시스템을 기반으로 임팩트를 구축합니다. SNS 콘텐츠부터 캠페인 전략까지 일관된 구조로 실행합니다.',
+    description: 'SNS 콘텐츠부터 캠페인 전략까지. 브랜드 일관성을 유지합니다.',
     href: '#portfolio',
   },
 ]
@@ -43,26 +39,28 @@ export default function Services() {
     <section id="services" className="nd-section" style={{ background: 'var(--black)' }}>
       <div className="nd-container">
         <div style={{ display: 'grid', gridTemplateColumns: '1fr 2fr', gap: 80, alignItems: 'start' }}>
-          {/* Left */}
+
+          {/* Left sticky */}
           <div style={{ position: 'sticky', top: 120 }}>
-            <span className="nd-label" style={{ marginBottom: 16 }}>Services</span>
             <h2 style={{
-              fontSize: 'clamp(28px, 4vw, 44px)',
-              fontWeight: 600,
-              letterSpacing: '-0.03em',
-              lineHeight: 1.1,
+              fontSize: 'clamp(32px, 4vw, 52px)',
+              fontWeight: 700,
+              letterSpacing: '-0.04em',
+              lineHeight: 1.0,
               color: 'var(--white)',
-              marginBottom: 24,
+              marginBottom: 32,
             }}>
-              How We<br />Frame Reality.
+              무엇을<br />
+              <span style={{ color: 'var(--lime)' }}>만드는가.</span>
             </h2>
-            <p style={{ fontSize: 15, lineHeight: 1.7, color: 'rgba(255,255,255,0.45)' }}>
-              구조를 설계하고<br />
-              현실을 프레이밍합니다.
-            </p>
+            <div style={{
+              width: 40,
+              height: 2,
+              background: 'var(--lime)',
+            }} />
           </div>
 
-          {/* Right */}
+          {/* Right: service list */}
           <div>
             {services.map((svc, i) => (
               <motion.div
@@ -70,38 +68,59 @@ export default function Services() {
                 initial={{ opacity: 0, x: 24 }}
                 whileInView={{ opacity: 1, x: 0 }}
                 viewport={{ once: true }}
-                transition={{ duration: 0.5, delay: i * 0.1 }}
+                transition={{ duration: 0.5, delay: i * 0.08 }}
                 style={{
                   display: 'flex',
                   gap: 32,
-                  padding: '36px 0',
+                  padding: '40px 0',
                   borderBottom: '1px solid rgba(255,255,255,0.08)',
                   cursor: 'pointer',
+                  transition: 'padding-left 0.25s ease',
                 }}
                 onClick={() => scrollTo(svc.href)}
-                onMouseEnter={e => (e.currentTarget.style.paddingLeft = '12px')}
+                onMouseEnter={e => (e.currentTarget.style.paddingLeft = '16px')}
                 onMouseLeave={e => (e.currentTarget.style.paddingLeft = '0')}
-                className="services-item"
               >
-                <span style={{ fontSize: 12, fontWeight: 600, color: 'var(--lime)', letterSpacing: '0.1em', paddingTop: 4, flexShrink: 0 }}>
+                <span style={{
+                  fontSize: 11,
+                  fontWeight: 700,
+                  color: 'var(--lime)',
+                  letterSpacing: '0.1em',
+                  paddingTop: 4,
+                  flexShrink: 0,
+                }}>
                   {svc.num}
                 </span>
                 <div style={{ flex: 1 }}>
-                  <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'baseline', marginBottom: 8 }}>
-                    <h3 style={{ fontSize: 22, fontWeight: 600, letterSpacing: '-0.02em', color: 'var(--white)' }}>
-                      {svc.title}
-                    </h3>
-                    <span style={{ fontSize: 12, color: 'rgba(255,255,255,0.3)', letterSpacing: '0.1em' }}>
-                      {svc.en}
-                    </span>
-                  </div>
-                  <p style={{ fontSize: 14, lineHeight: 1.7, color: 'rgba(255,255,255,0.45)' }}>
+                  <h3 style={{
+                    fontSize: 24,
+                    fontWeight: 600,
+                    letterSpacing: '-0.02em',
+                    color: 'var(--white)',
+                    marginBottom: 10,
+                  }}>
+                    {svc.title}
+                  </h3>
+                  <p style={{
+                    fontSize: 14,
+                    lineHeight: 1.7,
+                    color: 'rgba(255,255,255,0.4)',
+                  }}>
                     {svc.description}
                   </p>
                 </div>
+                <span style={{
+                  color: 'rgba(255,255,255,0.2)',
+                  fontSize: 20,
+                  alignSelf: 'center',
+                  flexShrink: 0,
+                }}>
+                  →
+                </span>
               </motion.div>
             ))}
           </div>
+
         </div>
       </div>
     </section>

@@ -2,7 +2,6 @@
 
 import { useState, useEffect } from 'react'
 import Image from 'next/image'
-import Link from 'next/link'
 
 const navItems = [
   { label: 'About', href: '#about' },
@@ -13,7 +12,6 @@ const navItems = [
 
 export default function Nav() {
   const [scrolled, setScrolled] = useState(false)
-  const [menuOpen, setMenuOpen] = useState(false)
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 40)
@@ -22,7 +20,6 @@ export default function Nav() {
   }, [])
 
   const handleNav = (href: string) => {
-    setMenuOpen(false)
     if (href.startsWith('#')) {
       const el = document.querySelector(href)
       if (el) el.scrollIntoView({ behavior: 'smooth' })
@@ -68,59 +65,66 @@ export default function Nav() {
               key={item.label}
               onClick={() => handleNav(item.href)}
               style={{
-                fontSize: 14,
+                fontSize: 13,
                 fontWeight: 500,
-                color: 'var(--gray-800)',
-                letterSpacing: '0.01em',
+                color: 'var(--gray-600)',
+                letterSpacing: '0.02em',
                 transition: 'color 0.2s',
                 background: 'none',
                 border: 'none',
                 cursor: 'pointer',
               }}
               onMouseEnter={e => (e.currentTarget.style.color = 'var(--black)')}
-              onMouseLeave={e => (e.currentTarget.style.color = 'var(--gray-800)')}
+              onMouseLeave={e => (e.currentTarget.style.color = 'var(--gray-600)')}
             >
               {item.label}
             </button>
           ))}
-          {/* Perspective Toggle — 다른 현실 보기 */}
+
+          {/* MONSTER — 설명 없음, 이름만 */}
           <a
-            href="http://localhost:3001"
+            href="https://beos-studio-monster.vercel.app"
             target="_blank"
             rel="noopener noreferrer"
             style={{
-              padding: '8px 16px',
+              padding: '8px 18px',
               border: '1px solid var(--lime)',
               color: 'var(--black)',
               fontSize: 11,
-              fontWeight: 700,
-              letterSpacing: '0.12em',
+              fontWeight: 800,
+              letterSpacing: '0.18em',
               textTransform: 'uppercase',
+              transition: 'background 0.2s ease, color 0.2s ease',
               display: 'flex',
               alignItems: 'center',
-              gap: 6,
-              transition: 'background 0.2s ease',
+              gap: 8,
             }}
-            onMouseEnter={e => (e.currentTarget.style.background = 'var(--lime)')}
-            onMouseLeave={e => (e.currentTarget.style.background = 'transparent')}
+            onMouseEnter={e => {
+              e.currentTarget.style.background = 'var(--lime)'
+            }}
+            onMouseLeave={e => {
+              e.currentTarget.style.background = 'transparent'
+            }}
           >
-            <span style={{ fontSize: 14 }}>⟳</span> Shift Perspective
+            MONSTER
           </a>
+
           <a
             href="/consultation"
             style={{
               padding: '10px 22px',
               background: 'var(--black)',
               color: 'var(--white)',
-              fontSize: 13,
-              fontWeight: 500,
-              letterSpacing: '0.02em',
+              fontSize: 12,
+              fontWeight: 600,
+              letterSpacing: '0.08em',
+              textTransform: 'uppercase',
               transition: 'background 0.2s ease',
             }}
             onMouseEnter={e => (e.currentTarget.style.background = '#333')}
             onMouseLeave={e => (e.currentTarget.style.background = 'var(--black)')}
           >
-            GET IN TOUCH
+            Contact
           </a>
         </nav>
       </div>
