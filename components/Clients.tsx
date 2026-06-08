@@ -13,8 +13,7 @@ export default function Clients() {
   return (
     <div
       style={{
-        borderTop: '1px solid var(--gray-200)',
-        borderBottom: '1px solid var(--gray-200)',
+        borderBottom: '1px solid rgba(255,255,255,0.05)',
         background: 'var(--black)',
         overflow: 'hidden',
         padding: '22px 0',
