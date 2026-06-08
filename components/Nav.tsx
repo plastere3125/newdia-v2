@@ -69,28 +69,6 @@ export default function Nav() {
             </button>
           ))}
 
-          {/* MONSTER */}
-          <a
-            href="https://beos-studio-monster.vercel.app"
-            target="_blank"
-            rel="noopener noreferrer"
-            className="nd-monster-btn"
-            style={{
-              padding: '7px 16px',
-              border: '1px solid var(--lime)',
-              fontSize: 10,
-              fontWeight: 800,
-              letterSpacing: '0.2em',
-              textTransform: 'uppercase',
-              color: 'var(--black)',
-              transition: 'background 0.2s ease',
-            }}
-            onMouseEnter={e => (e.currentTarget.style.background = 'var(--lime)')}
-            onMouseLeave={e => (e.currentTarget.style.background = 'transparent')}
-          >
-            MONSTER
-          </a>
-
           {/* CTA */}
           <a
             href="/consultation"

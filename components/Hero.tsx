@@ -17,7 +17,7 @@ export default function Hero() {
       style={{
         position: 'relative',
         height: '100vh',
-        minHeight: 720,
+        minHeight: 760,
         display: 'flex',
         flexDirection: 'column',
         justifyContent: 'center',
@@ -32,47 +32,33 @@ export default function Hero() {
         inset: 0,
         backgroundImage: 'linear-gradient(var(--gray-200) 1px, transparent 1px), linear-gradient(90deg, var(--gray-200) 1px, transparent 1px)',
         backgroundSize: '64px 64px',
-        opacity: 0.5,
+        opacity: 0.45,
       }} />
-
-      {/* Lime right accent line — desktop only */}
-      <motion.div
-        initial={{ scaleY: 0, transformOrigin: 'top' }}
-        animate={{ scaleY: 1 }}
-        transition={{ duration: 1.4, delay: 0.1, ease: [0.22, 1, 0.36, 1] }}
-        className="nd-hero-line"
-        style={{
-          position: 'absolute',
-          top: 0, right: 96,
-          width: 2, height: '100%',
-          background: 'var(--lime)',
-        }}
-      />
 
       {/* Stat column — desktop only */}
       <motion.div
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
-        transition={{ duration: 0.8, delay: 1.0 }}
+        transition={{ duration: 0.8, delay: 1.2 }}
         className="nd-hero-stats"
         style={{
           position: 'absolute',
           top: '50%',
-          right: 0,
-          width: 96,
+          right: 48,
+          width: 80,
           transform: 'translateY(-50%)',
           display: 'flex',
           flexDirection: 'column',
           alignItems: 'center',
-          gap: 36,
+          gap: 32,
         }}
       >
         {stats.map(s => (
           <div key={s.label} style={{ textAlign: 'center' }}>
-            <div style={{ fontSize: 20, fontWeight: 800, letterSpacing: '-0.04em', lineHeight: 1, color: 'var(--black)' }}>
+            <div style={{ fontSize: 18, fontWeight: 800, letterSpacing: '-0.04em', lineHeight: 1, color: 'var(--black)' }}>
               {s.num}
             </div>
-            <div style={{ fontSize: 9, fontWeight: 700, letterSpacing: '0.2em', textTransform: 'uppercase', color: 'var(--gray-400)', marginTop: 5 }}>
+            <div style={{ fontSize: 8, fontWeight: 700, letterSpacing: '0.2em', textTransform: 'uppercase', color: 'var(--gray-400)', marginTop: 5 }}>
               {s.label}
             </div>
           </div>
@@ -81,31 +67,49 @@ export default function Hero() {
 
       {/* Main content */}
       <div className="nd-container nd-hero-container" style={{ position: 'relative', zIndex: 1 }}>
-        <div style={{ maxWidth: 800 }}>
+        <div style={{ maxWidth: 1000 }}>
+
+          {/* Studio label */}
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ duration: 0.5, delay: 0.2 }}
+            style={{
+              fontSize: 10,
+              fontWeight: 700,
+              letterSpacing: '0.28em',
+              textTransform: 'uppercase',
+              color: 'var(--gray-400)',
+              marginBottom: 40,
+            }}
+          >
+            Brand Design Studio — Seoul
+          </motion.div>
 
           {/* Headline */}
           <motion.h1
-            initial={{ opacity: 0, y: 40 }}
+            initial={{ opacity: 0, y: 32 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.9, delay: 0.3, ease: [0.22, 1, 0.36, 1] }}
+            transition={{ duration: 0.9, delay: 0.35, ease: [0.22, 1, 0.36, 1] }}
             style={{
-              fontSize: 'clamp(80px, 13vw, 200px)',
+              fontSize: 'clamp(56px, 9.5vw, 148px)',
               fontWeight: 800,
-              letterSpacing: '-0.06em',
-              lineHeight: 0.88,
+              letterSpacing: '-0.055em',
+              lineHeight: 0.9,
               color: 'var(--black)',
-              marginBottom: 64,
+              marginBottom: 56,
             }}
           >
-            브랜드를<br />
-            <span style={{ color: 'var(--lime)' }}>결정합니다.</span>
+            Framing<br />
+            Ideas into<br />
+            <span style={{ color: 'var(--lime)' }}>Impact.</span>
           </motion.h1>
 
           {/* Discipline strip */}
           <motion.div
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
-            transition={{ duration: 0.6, delay: 0.8 }}
+            transition={{ duration: 0.6, delay: 0.85 }}
             style={{
               display: 'flex',
               borderTop: '1px solid var(--gray-200)',
@@ -157,7 +161,7 @@ export default function Hero() {
           <motion.div
             initial={{ opacity: 0, y: 12 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.5, delay: 1.0 }}
+            transition={{ duration: 0.5, delay: 1.05 }}
             style={{ display: 'flex', gap: 12 }}
           >
             <a
