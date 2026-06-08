@@ -1,6 +1,6 @@
 'use client'
 
-import { motion } from 'framer-motion'
+import { motion, useMotionValue, useSpring, useTransform } from 'framer-motion'
 
 const stats = [
   { num: '10+', label: 'Years' },
@@ -10,10 +10,45 @@ const stats = [
 
 const disciplines = ['Brand Identity', 'Web Design', 'Photography', 'Marketing']
 
+const corners = [
+  { top: -20, left: -20, borderTop: '2px solid var(--lime)', borderLeft: '2px solid var(--lime)' },
+  { top: -20, right: -20, borderTop: '2px solid var(--lime)', borderRight: '2px solid var(--lime)' },
+  { bottom: -20, left: -20, borderBottom: '2px solid var(--lime)', borderLeft: '2px solid var(--lime)' },
+  { bottom: -20, right: -20, borderBottom: '2px solid var(--lime)', borderRight: '2px solid var(--lime)' },
+] as const
+
 export default function Hero() {
+  const mouseX = useMotionValue(0.5)
+  const mouseY = useMotionValue(0.5)
+  const smoothX = useSpring(mouseX, { stiffness: 45, damping: 16 })
+  const smoothY = useSpring(mouseY, { stiffness: 45, damping: 16 })
+
+  // Headline moves opposite to cursor (foreground layer)
+  const headX = useTransform(smoothX, [0, 1], [16, -16])
+  const headY = useTransform(smoothY, [0, 1], [10, -10])
+  // Grid drifts with cursor (background layer)
+  const gridX = useTransform(smoothX, [0, 1], [-10, 10])
+  const gridY = useTransform(smoothY, [0, 1], [-6, 6])
+  // Corners counter-drift (mid layer)
+  const cornerX = useTransform(smoothX, [0, 1], [8, -8])
+  const cornerY = useTransform(smoothY, [0, 1], [5, -5])
+
+  const handleMouseMove = (e: React.MouseEvent<HTMLElement>) => {
+    const rect = e.currentTarget.getBoundingClientRect()
+    mouseX.set((e.clientX - rect.left) / rect.width)
+    mouseY.set((e.clientY - rect.top) / rect.height)
+  }
+
+  const handleMouseLeave = () => {
+    mouseX.set(0.5)
+    mouseY.set(0.5)
+  }
+
   return (
     <section
       id="hero"
+      onMouseMove={handleMouseMove}
+      onMouseLeave={handleMouseLeave}
       style={{
         position: 'relative',
         height: '100vh',
@@ -24,16 +59,21 @@ export default function Hero() {
         overflow: 'hidden',
         background: 'var(--white)',
         paddingTop: 'var(--header-h)',
+        cursor: 'default',
       }}
     >
-      {/* Grid background */}
-      <div style={{
-        position: 'absolute',
-        inset: 0,
-        backgroundImage: 'linear-gradient(var(--gray-200) 1px, transparent 1px), linear-gradient(90deg, var(--gray-200) 1px, transparent 1px)',
-        backgroundSize: '64px 64px',
-        opacity: 0.45,
-      }} />
+      {/* Grid background — parallax layer (back) */}
+      <motion.div
+        style={{
+          position: 'absolute',
+          inset: -24,
+          x: gridX,
+          y: gridY,
+          backgroundImage: 'linear-gradient(var(--gray-200) 1px, transparent 1px), linear-gradient(90deg, var(--gray-200) 1px, transparent 1px)',
+          backgroundSize: '64px 64px',
+          opacity: 0.45,
+        }}
+      />
 
       {/* Stat column — desktop only */}
       <motion.div
@@ -86,24 +126,52 @@ export default function Hero() {
             Brand Design Studio — Seoul
           </motion.div>
 
-          {/* Headline */}
-          <motion.h1
-            initial={{ opacity: 0, y: 32 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.9, delay: 0.35, ease: [0.22, 1, 0.36, 1] }}
-            style={{
-              fontSize: 'clamp(56px, 9.5vw, 148px)',
-              fontWeight: 800,
-              letterSpacing: '-0.055em',
-              lineHeight: 0.9,
-              color: 'var(--black)',
-              marginBottom: 56,
-            }}
-          >
-            Framing<br />
-            Ideas into<br />
-            <span style={{ color: 'var(--lime)' }}>Impact.</span>
-          </motion.h1>
+          {/* Headline + viewfinder corners — parallax layer (front) */}
+          <motion.div style={{ position: 'relative', width: 'fit-content', marginBottom: 56, x: headX, y: headY }}>
+
+            {/* Viewfinder corners */}
+            {corners.map((corner, i) => (
+              <motion.div
+                key={i}
+                initial={{ opacity: 0, scale: 0.4 }}
+                animate={{ opacity: 1, scale: 1 }}
+                transition={{ duration: 0.45, delay: 0.1 + i * 0.07, ease: [0.22, 1, 0.36, 1] }}
+                style={{
+                  position: 'absolute' as const,
+                  width: 22,
+                  height: 22,
+                  x: cornerX,
+                  y: cornerY,
+                  ...corner,
+                }}
+              />
+            ))}
+
+            <motion.h1
+              initial={{ opacity: 0, y: 32 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.9, delay: 0.35, ease: [0.22, 1, 0.36, 1] }}
+              style={{
+                fontSize: 'clamp(56px, 9.5vw, 148px)',
+                fontWeight: 800,
+                letterSpacing: '-0.055em',
+                lineHeight: 0.9,
+                color: 'var(--black)',
+                padding: '16px 0 8px',
+              }}
+            >
+              Framing<br />
+              Ideas into<br />
+              <motion.span
+                initial={{ opacity: 0, scale: 1.18, display: 'inline-block' }}
+                animate={{ opacity: 1, scale: 1 }}
+                transition={{ duration: 0.55, delay: 0.88, ease: [0.22, 1, 0.36, 1] }}
+                style={{ color: 'var(--lime)', display: 'inline-block', transformOrigin: 'left center' }}
+              >
+                Impact.
+              </motion.span>
+            </motion.h1>
+          </motion.div>
 
           {/* Discipline strip */}
           <motion.div
